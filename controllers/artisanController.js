@@ -20,7 +20,7 @@ exports.getTousLesArtisans = async (req, res, next) => {
 
     const artisans = await Artisan.findAll({
       where,
-      include: [{ model: Categorie, as: "categorie", where: Object.keys(includeWhere).length ? includeWhere : undefined, attributes: ["id", "nom"] }],
+      include: [{ model: Categorie, as: "categorie", where: Object.keys(includeWhere).length ? includeWhere : undefined, attributes: ["id", "nom","slug"] }],
       order: [["top", "DESC"], ["note", "DESC"]],
     });
 
@@ -34,7 +34,7 @@ exports.getTousLesArtisans = async (req, res, next) => {
 exports.getArtisanParId = async (req, res, next) => {
   try {
     const artisan = await Artisan.findByPk(req.params.id, {
-      include: [{ model: Categorie, as: "categorie", attributes: ["id", "nom"] }],
+      include: [{ model: Categorie, as: "categorie", attributes: ["id", "nom","slug"] }],
     });
     if (!artisan) {
       const erreur = new Error("Artisan introuvable");
